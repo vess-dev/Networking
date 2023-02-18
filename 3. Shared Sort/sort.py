@@ -296,7 +296,7 @@ if __name__ == "__main__":
 					throw()
 			file_name = sys.argv[1]
 		except:
-			print("Error: The first command line argument must be a valid file path")
+			server_status("Error: The first command line argument must be a valid file path")
 			exit()
 	else:
 		# Create a debug file if no file name is specified.
@@ -313,7 +313,7 @@ if __name__ == "__main__":
 			if child_count <= 0:
 				throw()
 		except:
-			print("Error: The second command line arugment must be a positive Integer")
+			server_status("Error: The second command line arugment must be a positive Integer")
 			exit()
 	server_status("Set child count to " + str(child_count))
 	file_handle = open(file_name, "r")

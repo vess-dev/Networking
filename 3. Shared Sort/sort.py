@@ -277,8 +277,8 @@ def server_start(mem_flag, mem_kill, child_count, flag_guide):
 				work_tracker.append(flag_list[chunk_next][0])
 				server_status("Dispatched for child " + str(child_next) + " to sort chunks " + str(list(range(temp_pair[0], chunk_end + 1))))
 	# Send the signal for children to kill themselves.
-	time.sleep(0.1)
 	mem_kill.buf[0] = 1
+	time.sleep(0.1)
 	return
 
 #==================================================================================================================================

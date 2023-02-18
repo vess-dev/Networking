@@ -2,8 +2,8 @@
 # client.py - Copyright Vess 2023
 # Proof of concept for a shared memory chat client in Python. Uses a simple read / write flag to check for messages.
 #==================================================================================================================================
-# Known Bugs
-# 1. If client 1 joins, and sends a message, the "connect message" will be lost.
+# Known Bugs, Issues, and Limitations
+# 1. If client 1 joins and sends a message, the "connect message" will be lost.
 # 2. A client has to send an empty message to recieve updates. Due to timing, messages can be lost.
 # 3. There is no message queue for either user, which sort of leads to the two aforementioned issues. It is trivial to implement.
 #==================================================================================================================================

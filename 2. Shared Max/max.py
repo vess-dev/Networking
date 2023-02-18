@@ -2,7 +2,7 @@
 # max.py - Copyright Vess 2023
 # Proof of concept for a shared memory max sort client. Each child finds the max of a smaller set of numbers.
 #==================================================================================================================================
-# Known Bugs
+# Known Bugs, Issues, and Limitations
 # 1. All numbers must currently be less than 255.
 # 2. No error checking on the input array.
 #==================================================================================================================================

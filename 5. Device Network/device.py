@@ -66,36 +66,39 @@ def init_device(input_parent, input_self, input_coord, input_dist):
 			# Ignore all devices too far away.
 			if check_dist(input_coord, client_data[1], client_data[2]):
 				if (input_self[0] == client_data[4]) or (not client_data[3]):
-					tool.log_print(input_self[0], "Recieved data: " + client_string)
-					device_old = copy.deepcopy(device_table)
-					# We've never seen the sender device...
-					if not client_data[0] in device_table:
-						tool.log_print(input_self[0], "Found a new device: " + client_data[0])
-						device_table[client_data[0]] = [client_data[0], client_data[6]]
-					# Add their table to ours.
-					for temp_device in client_data[5].keys():
-						# Don't add ourself.
-						if temp_device != input_self[0]:
-							if not temp_device in device_table:
-								tool.log_print(input_self[0], "Found a new device: " + temp_device + ", from: " + client_data[0])
-								device_table[temp_device] = [client_data[0], client_data[5][temp_device][1] + client_data[6]]
-								# Let the new device know we exist.
-								parent_addr = (input_parent[1], input_parent[2])
-								packet_data = (input_self[0], input_coord, input_dist, client_data[0], temp_device, device_table, 1)
-								tool.send_data(parent_addr, str(packet_data))
-							elif client_data[5][temp_device][1] + client_data[6] < device_table[temp_device][1]:
-								tool.log_print(input_self[0], "Found a better path for: " + temp_device + ", from " + client_data[0] + ", instead of " + device_table[temp_device][0] + ", in " + str(client_data[5][temp_device][1] + client_data[6]) + " hops, over " + str(device_table[temp_device][1]) + " hops.")
-								device_table[temp_device] = [client_data[0], client_data[5][temp_device][1] + client_data[6]]
-					# Send out table updates.
-					if device_table != device_old:
-						string_format = pprint.PrettyPrinter(indent=4, width=30)
-						string_table = string_format.pformat(device_table)
-						tool.log_print(input_self[0], "New table: \n" + string_table)
-						if len(device_table) != 1:
-							for temp_target in device_table.keys():
-								parent_addr = (input_parent[1], input_parent[2])
-								packet_data = (input_self[0], input_coord, input_dist, device_table[temp_target][0], temp_target, device_table, 1)
-								tool.send_data(parent_addr, str(packet_data))
+					if device_table != client_data[5] or not device_table:
+						tool.log_print(input_self[0], "Recieved data: " + client_string)
+						device_old = copy.deepcopy(device_table)
+						# We've never seen the sender device...
+						if not client_data[0] in device_table:
+							tool.log_print(input_self[0], "Found a new device: " + client_data[0])
+							device_table[client_data[0]] = [client_data[0], client_data[6]]
+						# Add their table to ours.
+						for temp_device in client_data[5].keys():
+							# Don't add ourself.
+							if temp_device != input_self[0]:
+								if not temp_device in device_table:
+									tool.log_print(input_self[0], "Found a new device: " + temp_device + ", from: " + client_data[0])
+									device_table[temp_device] = [client_data[0], client_data[5][temp_device][1] + client_data[6]]
+									# Let the new device know we exist.
+									parent_addr = (input_parent[1], input_parent[2])
+									packet_data = (input_self[0], input_coord, input_dist, client_data[0], temp_device, device_table, 1)
+									tool.send_data(parent_addr, str(packet_data))
+								elif client_data[5][temp_device][1] + client_data[6] < device_table[temp_device][1]:
+									tool.log_print(input_self[0], "Found a better path for: " + temp_device + ", from " + client_data[0] + ", instead of " + device_table[temp_device][0] + ", in " + str(client_data[5][temp_device][1] + client_data[6]) + " hops, over " + str(device_table[temp_device][1]) + " hops.")
+									device_table[temp_device] = [client_data[0], client_data[5][temp_device][1] + client_data[6]]
+						# Send out table updates.
+						if device_table != device_old:
+							string_format = pprint.PrettyPrinter(indent=4, width=30)
+							string_table = string_format.pformat(device_table)
+							tool.log_print(input_self[0], "New table: \n" + string_table)
+							if len(device_table) != 1:
+								for temp_target in device_table.keys():
+									parent_addr = (input_parent[1], input_parent[2])
+									packet_data = (input_self[0], input_coord, input_dist, device_table[temp_target][0], temp_target, device_table, 1)
+									tool.send_data(parent_addr, str(packet_data))
+					else:
+						tool.log_print(input_self[0], ">>> MEOW")
 				# We are the hop.
 				elif input_self[0] == client_data[3]:
 					tool.log_print(input_self[0], "Recieved data: " + client_string)

@@ -65,7 +65,9 @@ def init_device(input_parent, input_self, input_coord, input_dist):
 			client_data = eval(client_string)
 			# Ignore all devices too far away.
 			if check_dist(input_coord, client_data[1], client_data[2]):
+				# Is the message a non-hop message?
 				if (input_self[0] == client_data[4]) or (not client_data[3]):
+					# Ignore non-updates.
 					if device_table != client_data[5] or not device_table:
 						tool.log_print(input_self[0], "Recieved data: " + client_string)
 						device_old = copy.deepcopy(device_table)
@@ -97,9 +99,7 @@ def init_device(input_parent, input_self, input_coord, input_dist):
 									parent_addr = (input_parent[1], input_parent[2])
 									packet_data = (input_self[0], input_coord, input_dist, device_table[temp_target][0], temp_target, device_table, 1)
 									tool.send_data(parent_addr, str(packet_data))
-					else:
-						tool.log_print(input_self[0], ">>> MEOW")
-				# We are the hop.
+				# We are the hop device, pass along the message.
 				elif input_self[0] == client_data[3]:
 					tool.log_print(input_self[0], "Recieved data: " + client_string)
 					parent_addr = (input_parent[1], input_parent[2])

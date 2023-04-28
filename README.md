@@ -36,7 +36,7 @@ This program features a daemon, and a hybrid master slave process to sort text f
 
 To run: `python3 ./daemon.py` on two computers on the same network, sharing the same folder.
 
-And: `python3 ./hybrid.py m 2"` to run a "m"aster process with two slaves.
+And: `python3 ./hybrid.py m 2` to run a (m)aster process with two slaves.
 
 ![Example4](Images/Example4.png "Daemon Sort Example")
 
@@ -46,7 +46,7 @@ This program features routers that create devices, that create routing tables to
 
 To run: `python3 ./router.py 10 50 0,100,0,100`
 
-Where the options are [device count] [device strength] [startx],[maxx],[starty],[maxy].
+Where the options are `[device count] [device strength] [startx],[maxx],[starty],[maxy]`.
 
 ![Example5](Images/Example5.png "Device Network Example")
 
